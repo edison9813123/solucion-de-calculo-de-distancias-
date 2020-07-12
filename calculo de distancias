@@ -1,0 +1,55 @@
+function dibujarPin(){
+    let auxArray = [];
+    let numeroCompañero=0;
+    for(let i =0; i<puntosCasaInsitutos.length;i++){
+        for(let j = 0; j<2;j++){
+            if(j==0)
+            {
+                auxArray = puntosCasaInsitutos[i][j];
+                L.marker(auxArray).addTo(map)
+                .bindPopup('Esta es la dirección de la casa de: '+ datos[numeroCompañero].nombre+ ' la distancia entre entre el Instituto y su casa es: '+ datos[numeroCompañero].distancia)
+                .openPopup();
+                numeroCompañero++;
+            }
+
+        }
+    }
+    L.marker([-0.225069,-78.5168959]).addTo(map)
+    .bindPopup('Tecnológico De Turismo Y Patrimonio "Yavirac"')
+    .openPopup();
+} 
+
+function dibujarLineas (puntos){
+    for(let i=0 ;i<puntos.length ;i++){
+        var polyline = L.polyline(puntos[i], {color: colorRandom()}).addTo(map);
+    }
+}
+
+function colorRandom(){
+    var letters = '0123456789ABCDEF';
+    var color = '#0000FF';
+    return color;
+}
+
+function distanciaDosPuntos(puntos){
+    let distancia = 0;
+    let numeroCompañero=0;
+    let institutoX = -0.225069;
+    let institutoY = -78.5168959;
+    let auxArray = []
+    let compañeros = []
+    for(let i =0; i<puntos.length;i++){
+        for(let j = 0; j<2;j++){
+            if(j==0){  
+                auxArray = puntos[i][j];
+                distancia = Math.sqrt(Math.pow(institutoX-auxArray[0],2)+Math.pow(institutoY-auxArray[1],2))
+                datos[numeroCompañero][distancia] =  distancia;
+                compañeros.push(distancia);
+                compañeros.sort();   
+            }
+        }
+    }
+  console.log(compañeros[numeroCompañero,compañeros.length-1]);
+}
+
+                
